@@ -1,6 +1,6 @@
 import { Github, Linkedin } from "lucide-react"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { toast } from "sonner"
+import { Link } from "react-router-dom"
 
 interface FormProps {
   email: string
@@ -8,12 +8,10 @@ interface FormProps {
 }
 
 export function AuthForm() {
-  const mailsType = '@gmail.com' || '@outlook.com' || '@yahoo.com' || '@icloud.com' || '@aol.com' || '@protonmail.com' || '@zoho.com' || '@gmx.com' || '@yandex.com' || '@mail.com' || '@hotmail.com' || '@live.com' || '@me.com' || '@rocketmail.com' || '@inbox.com' || '@fastmail.com' || '@yandex.ru' || '@qq.com' || '@163.com' || '@sina.com' || '@126.com' || '@163.net' || '@yeah.net' || '@sohu.com' || '@tutanota.com' || '@cock.li' || '@disroot.org' || '@riseup.net' || '@protonmail.ch' || '@posteo.de'
   const [formData, setFormData] = useState<FormProps>({
     email: '',
     password: ''
   })
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -26,15 +24,6 @@ export function AuthForm() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-  }
-
-  function authorization() {
-    if (formData.email.includes(mailsType) && formData.password) {
-      setIsAuthorized(true)
-      toast.success('Logado com sucesso!')
-    } else (
-      toast.error('Digite um e-mail válido e uma senha para testar')
-    )
   }
 
   return (
@@ -70,25 +59,26 @@ export function AuthForm() {
           />
         </div>
         <div className="gap-4 flex flex-col pt-6">
-          <button 
-            type="submit"
-            onClick={authorization}
-            className="w-full p-3 border border-lime-400 text-slate-800 tracking-wide from-lime-400 to-lime-300 bg-gradient-to-r rounded-md outline-none focus:ring-lime-400 focus:ring-2"
-          >
-            <a href={isAuthorized ? '/notes' : ''} className="hover:text-slate-900">Fazer log-in no app</a>
+          <button type="submit" className="w-full border border-lime-400 text-slate-800 tracking-wide from-lime-400 to-lime-300 bg-gradient-to-r rounded-md outline-none focus:ring-lime-400 focus:ring-2">
+            <Link 
+              to={'/notes'}
+              className="flex w-full h-full p-3 justify-center"
+            >
+              Fazer log-in no app
+            </Link>
           </button>
           
           <div className="flex">
-            <a href="/comingsoon" className="mx-auto text-sm hover:underline duration-200">Esqueceu sua senha?</a>
+            <Link to={'/comingsoon'} className="mx-auto text-sm hover:underline duration-200">Esqueceu sua senha?</Link>
           </div>
 
           <div className="text-sm space-y-2">
             <p>Fazer log-in com</p>
             <div className="flex gap-2">
-              <a href="/comingsoon" className="hover:text-lime-400 duration-200"><Github size={24} /></a>
-              <a href="/comingsoon" className="hover:text-lime-400 duration-200"><Linkedin size={24} /></a>
+              <Link to={'/comingsoon'} className="hover:text-lime-400 duration-200"><Github size={24} /></Link>
+              <Link to={'/comingsoon'} className="hover:text-lime-400 duration-200"><Linkedin size={24} /></Link>
             </div>
-            <p className="pt-4">Não tem conta? <a href="/comingsoon" className="underline text-slate-200 hover:text-lime-400 duration-200">Crie uma agora mesmo</a>!</p>
+            <p className="pt-4">Não tem conta? <Link to="/comingsoon" className="underline text-slate-200 hover:text-lime-400 duration-200">Crie uma agora mesmo</Link>!</p>
           </div>
         </div>
       </form>
